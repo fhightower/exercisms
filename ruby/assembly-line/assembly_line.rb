@@ -19,14 +19,9 @@ class AssemblyLine
   private
 
   def get_error_rate
-    if @speed <= 4
-      return 1
-    elsif @speed <= 8
-      return 0.9
-    elsif @speed == 9
-      return 0.8
-    else
-      return 0.77
-    end
+    return 0.77 if @speed == 10
+    return 0.8 if @speed == 9
+    return 0.9 if @speed >= 5
+    1
   end
 end
