@@ -6,23 +6,23 @@ class BoutiqueInventory
   end
 
   def item_names
-    @items.map { |item| item[:name] }.sort
+    items.map { |item| item[:name] }.sort
   end
 
   def cheap
-    @items.select { |item| item[:price] < CHEAP_THRESHOLD }
+    items.select { |item| item[:price] < CHEAP_THRESHOLD }
   end
 
   def out_of_stock
-    @items.select { |item| item[:quantity_by_size].empty? }
+    items.select { |item| item[:quantity_by_size].empty? or item[:quantity_by_size].any? { |_, quantity| quantity.zero? }}
   end
 
   def stock_for_item(name)
-    @items.find { |item| item[:name] == name }[:quantity_by_size]
+    items.find { |item| item[:name] == name }[:quantity_by_size]
   end
 
   def total_stock
-    @items.map { |item| item[:quantity_by_size].map { |_, quantity| quantity} }.flatten.sum
+    items.sum {|item| item[:quantity_by_size].values.sum }
   end
 
   private
