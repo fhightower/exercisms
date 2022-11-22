@@ -1,8 +1,8 @@
 class SumOfMultiples
   attr_reader :integers
 
-  def to(to_integer)
-    integers.map { |i| multiples(multiples_of: i, up_to: to_integer - 1) }.flatten.uniq.sum
+  def to(max_integer)
+    integers.map { |i| multiples_up_to(multiples_of: i, max_integer: max_integer - 1) }.flatten.uniq.sum
   end
 
   private
@@ -11,8 +11,8 @@ class SumOfMultiples
     @integers = integers
   end
 
-  def multiples(multiples_of:, up_to:)
-    (1..up_to).select { |n| multiple?(numerator: n, denominator: multiples_of) }
+  def multiples_up_to(multiples_of:, max_integer:)
+    1.upto(max_integer).select { |n| multiple?(numerator: n, denominator: multiples_of) }
   end
 
   def multiple?(numerator:, denominator:)
