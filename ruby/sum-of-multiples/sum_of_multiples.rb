@@ -1,18 +1,18 @@
+class Integer
+  def multiple_of?(integer)
+    return (self % integer).zero?
+  end
+end
+
 class SumOfMultiples
   attr_reader :integers
-
-  def to(max_integer)
-    1.upto(max_integer - 1).select { |counter| integers.any? { |int| multiple?(numerator: counter, denominator: int) } }.sum
-  end
-
-  private
 
   def initialize(*integers)
     @integers = integers
   end
 
-  def multiple?(numerator:, denominator:)
-    (numerator % denominator).zero?
+  def to(integer)
+    1.upto(integer - 1).sum { |counter| integers.any? { |int| counter.multiple_of?(int) } ? counter : 0 }
   end
 end
 
