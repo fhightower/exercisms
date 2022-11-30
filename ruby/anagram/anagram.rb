@@ -4,23 +4,21 @@ class String
     return false unless self != possible_anagram
     self.chars.sort == possible_anagram.chars.sort
   end
+
+  def clean
+    return self.downcase
+  end
 end
 
 class Anagram
   attr_reader :target
 
   def initialize(target)
-    @target = clean(target)
+    @target = target.clean
   end
 
   def match(possible_anagrams)
-    possible_anagrams.select { |word| clean(word).anagram_of?(target) }
-  end
-
-  private
-
-  def clean(string)
-    string.downcase
+    possible_anagrams.select { |word| word.clean.anagram_of?(target) }
   end
 end
 
