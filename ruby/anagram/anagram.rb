@@ -1,9 +1,8 @@
 class String
-  def anagram?(possible_anagram)
+  def anagram_of?(possible_anagram)
     return false unless self.length == possible_anagram.length
     return false unless self != possible_anagram
-
-    self.chars.uniq.all? { |c| self.count(c) == possible_anagram.count(c) }
+    self.chars.sort == possible_anagram.chars.sort
   end
 end
 
@@ -11,11 +10,17 @@ class Anagram
   attr_reader :target
 
   def initialize(target)
-    @target = target.downcase
+    @target = clean(target)
   end
 
   def match(possible_anagrams)
-    possible_anagrams.select { |word| word.downcase.anagram?(target) }
+    possible_anagrams.select { |word| clean(word).anagram_of?(target) }
+  end
+
+  private
+
+  def clean(string)
+    string.downcase
   end
 end
 
