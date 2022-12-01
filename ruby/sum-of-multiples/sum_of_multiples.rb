@@ -1,8 +1,12 @@
-class Integer
-  def multiple_of?(integer)
-    return (self % integer).zero?
+module ExtendedInteger
+  refine Integer do
+    def multiple_of?(integer)
+      (self % integer).zero?
+    end
   end
 end
+
+using ExtendedInteger
 
 class SumOfMultiples
   attr_reader :integers
@@ -12,7 +16,9 @@ class SumOfMultiples
   end
 
   def to(integer)
-    1.upto(integer - 1).sum { |counter| integers.any? { |int| counter.multiple_of?(int) } ? counter : 0 }
+    (1..integer - 1).sum do |counter|
+      integers.any? { |int| counter.multiple_of?(int) } ? counter : 0
+    end
   end
 end
 
