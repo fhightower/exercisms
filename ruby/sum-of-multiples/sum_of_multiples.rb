@@ -16,8 +16,8 @@ class SumOfMultiples
   end
 
   def to(integer)
-    (1..integer - 1).sum do |counter|
-      integers.any? { |int| counter.multiple_of?(int) } ? counter : 0
+    (1..integer - 1).sum do |number|
+      integers.any? { |int| number.multiple_of?(int) } ? number : 0
     end
   end
 end
