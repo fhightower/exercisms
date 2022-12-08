@@ -1,28 +1,23 @@
-module ExtendedString
-  refine String do
-    def anagram_of?(possible_anagram)
-      return false unless self.length == possible_anagram.length
-
-      downcased_possible_anagram = possible_anagram.downcase
-      downcased_self = self.downcase
-
-      return false unless downcased_self != downcased_possible_anagram
-      downcased_self.chars.sort == downcased_possible_anagram.chars.sort
-    end
-  end
-end
-
-using ExtendedString
-
 class Anagram
-  attr_reader :target
+  attr_reader :target, :downcased_word, :sorted_downcased_chars
 
   def initialize(target)
     @target = target
+    @downcased_word = target.downcase
+    @sorted_downcased_chars = downcased_word.chars.sort
   end
 
-  def match(possible_anagrams)
-    possible_anagrams.select { |word| word.anagram_of?(target) }
+  def match(candidates)
+    candidates.select { |candidate| is_anagram? candidate }
+  end
+
+  private
+
+  def is_anagram?(candidate)
+    downcased_candidate = candidate.downcase
+    return false unless downcased_candidate.length == downcased_word.length
+    return false unless downcased_candidate != downcased_word
+    sorted_downcased_chars == downcased_candidate.chars.sort
   end
 end
 
