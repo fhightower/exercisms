@@ -1,9 +1,5 @@
 class ETL
   def self.transform(old_data)
-    new_data = {}
-    old_data.map do | score, letters |
-      letters.map { |letter| new_data[letter.downcase] = score }
-    end
-    new_data
+    old_data.each_with_object({}) { |(score, letters), new_data| letters.each { |letter| new_data[letter.downcase] = score } }
   end
 end
