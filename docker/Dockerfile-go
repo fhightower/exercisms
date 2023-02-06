@@ -1,0 +1,7 @@
+FROM golang:1.20.0-buster
+
+COPY ./docker/install_exercism.sh /code/
+
+WORKDIR /go/src/code/
+
+RUN /code/install_exercism.sh

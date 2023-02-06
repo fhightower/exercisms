@@ -1,0 +1,8 @@
+FROM ruby:3.2-rc-buster
+
+COPY ./docker/install_exercism.sh /code/
+
+WORKDIR /code
+
+RUN /code/install_exercism.sh
+RUN gem install rubocop

@@ -1,16 +1,27 @@
 version: '3.4'
 
 services:
-  base:
-    &base
+  ruby-base:
+    &ruby-base
     build:
-      dockerfile: Dockerfile
+      dockerfile: docker/Dockerfile-ruby
       context: .
     volumes:
       - ./:/code
 
-  # a fully loaded development environment to test new code
-  dev:
-    <<: *base
+  ruby-dev:
+    <<: *ruby-base
+    command: bash
+
+  go-base:
+    &go-base
+    build:
+      dockerfile: docker/Dockerfile-go
+      context: .
+    volumes:
+      - ./:/go/src/code/
+
+  go-dev:
+    <<: *go-base
     command: bash
 
