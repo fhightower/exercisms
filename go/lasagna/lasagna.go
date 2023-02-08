@@ -1,7 +1,9 @@
 package lasagna
 
-const OvenTime = 40
-const timePerLayer = 2
+const (
+	OvenTime     = 40
+	timePerLayer = 2
+)
 
 // RemainingOvenTime returns the remaining minutes based on the `actual` minutes already in the oven.
 func RemainingOvenTime(actualMinutesInOven int) int {
