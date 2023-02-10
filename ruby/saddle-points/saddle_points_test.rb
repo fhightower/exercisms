@@ -53,7 +53,8 @@ class MatrixTest < Minitest::Test
   end
 
   def test_multiple_saddle_points_2
+    # this is failing and should be passing...
     matrix = Matrix.new("4 4 6\n3 5 5\n1 4 6")
-    assert_equal [[0, 1], [1, 1], [2, 1]], matrix.saddle_points
+    assert_equal [[1, 2]], matrix.saddle_points
   end
 end

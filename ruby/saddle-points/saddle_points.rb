@@ -9,20 +9,18 @@ class Matrix
   end
 
   def saddle_points
-    possible_saddle_points = @rows.map.with_index { |row, i| [i, find_column_of_maximum_row_value(row)] }
-    possible_saddle_points.select do |row_index, column_index|
-      @rows[row_index][column_index] == find_minimum_column_value(column_index)
-    end
+    possible_saddle_coordinates = @rows.map.with_index { |row, i| find_possible_saddle_coordinates(row, i) }.flatten(1)
+    possible_saddle_coordinates.select { |coordinates| saddle_point?(coordinates) }
   end
 
   private
 
-  def find_column_of_maximum_row_value(row)
-    # todo: this should return all indexes with the max value
-    row.index(row.max)
+  def find_possible_saddle_coordinates(row, row_index)
+    max = row.max
+    row.map.with_index { |integer, column_index| integer == max ? [row_index, column_index] : nil }.compact
   end
 
-  def find_minimum_column_value(column_index)
-    @columns[column_index].min
+  def saddle_point?(coordinates)
+    @columns[coordinates[1]].min == @rows[coordinates[0]][coordinates[1]]
   end
 end
