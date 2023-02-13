@@ -1,26 +1,27 @@
+class Array
+  def indices(val)
+    each_index.select { |index| self[index] == val }
+  end
+end
+
 class Matrix
   attr_reader :rows, :columns
 
   def initialize(matrix_string)
     @rows = matrix_string.lines(chomp: true).map { |row| row.split.map(&:to_i) }
-
-    first, *rest = @rows
-    @columns = first.zip(*rest)
+    @columns = @rows.transpose
   end
 
   def saddle_points
-    possible_saddle_coordinates = @rows.map.with_index { |row, i| find_possible_saddle_coordinates(row, i) }.flatten(1)
-    possible_saddle_coordinates.select { |coordinates| saddle_point?(coordinates) }
-  end
+    row_maxes = @rows.map(&:max)
+    col_mins = @columns.map(&:min)
+    saddle_coordinates = []
 
-  private
-
-  def find_possible_saddle_coordinates(row, row_index)
-    max = row.max
-    row.map.with_index { |integer, column_index| integer == max ? [row_index, column_index] : nil }.compact
-  end
-
-  def saddle_point?(coordinates)
-    @columns[coordinates[1]].min == @rows[coordinates[0]][coordinates[1]]
+    row_maxes.map.with_index do |row_max, row_index|
+      col_mins.indices(row_max).map do |col_index|
+        saddle_coordinates.push([row_index, col_index])
+      end
+    end
+    saddle_coordinates
   end
 end
