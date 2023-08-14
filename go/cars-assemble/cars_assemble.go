@@ -1,7 +1,9 @@
 package cars
 
-const costPerCar int = 10000
-const costPerTenCars int = 95000
+const (
+	costPerCar     = 10000
+	costPerTenCars = 95000
+)
 
 func convertPercentToDecimal(percent float64) float64 {
 	return percent / 100
