@@ -6,3 +6,7 @@ WORKDIR /code
 
 RUN /code/install_exercism.sh
 RUN gem install rubocop
+
+ARG EXERCISM_TOKEN
+ENV EXERCISM_TOKEN=${EXERCISM_TOKEN}
+RUN exercism configure -t $EXERCISM_TOKEN

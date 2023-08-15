@@ -5,4 +5,7 @@ COPY ./docker/install_exercism.sh /code/
 WORKDIR /go/src/code/
 
 RUN /code/install_exercism.sh
-RUN exercism configure -w /go/src/code/
+
+ARG EXERCISM_TOKEN
+ENV EXERCISM_TOKEN=${EXERCISM_TOKEN}
+RUN exercism configure -w /go/src/code/ -t $EXERCISM_TOKEN
